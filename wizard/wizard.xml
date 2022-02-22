@@ -1,0 +1,35 @@
+<odoo>
+    <record id="libros_de_compras_form_wizard" model="ir.ui.view">
+        <field name="name">libro.de.compras.form.wizard</field>
+        <field name="model">libro.compras.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="f_inicio"/>
+                        <field name="f_fin"/>
+                    </group>
+                </group>
+                <footer>
+                    <button class="btn-primary" name="generate_pdf" type="object" string="PDF"/>
+                    <button class="btn-primary" name="generate_xlsx" type="object" string="XSLX"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_libro_de_compras_wizard" model="ir.actions.act_window">
+        <field name="name">Selecciona el Rango de Fechas</field>
+        <field name="res_model">libro.compras.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="libros_de_compras_form_wizard"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem 
+        name="Generar Libro De Compras"
+        parent="menu_libro_de_compras"
+        id="wizard_menu"
+        action="action_libro_de_compras_wizard"
+    />
+</odoo>

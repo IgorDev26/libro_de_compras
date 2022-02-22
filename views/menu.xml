@@ -1,0 +1,22 @@
+<odoo>
+    <menuitem
+        name="Registro de compras"
+        id="menu_registro_de_compras"
+        action="libro_de_compras.libro_compras_action"
+        parent="account.account_reports_management_menu"
+    />
+
+    <menuitem
+        name="Libro de compras"
+        id="menu_libro_de_compras"
+        action="libro_de_compras.action_resumen"
+        parent="account.account_reports_management_menu"
+    />
+
+    <menuitem
+        name="Resumen"
+        id="resumen_libro_de_compras"
+        action="libro_de_compras.action_resumen"
+        parent="menu_libro_de_compras"
+    />
+</odoo>

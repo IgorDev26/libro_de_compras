@@ -1,0 +1,251 @@
+<odoo>
+    <record id="paper_format_libro_de_compras" model="report.paperformat">
+        <field name="name">Libro de Compras Paper Format</field>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+    </record>
+
+    <report
+        id="libro_de_compras_pdf_report"
+        string="Generar PDF"
+        model="libro.compras"
+        report_type="qweb-pdf"
+        name="libro_de_compras.libro_de_compras_pdf_template"
+        paperformat="libro_de_compras.paper_format_libro_de_compras"
+    />
+
+    <template id="libro_de_compras_pdf_template">
+        <t t-call="web.html_container">
+            <t t-if="docs">
+                <t t-set="o" t-value="docs"/>
+            </t>
+
+            <t t-if="ventas">
+                <t t-set="o" t-value="ventas"/>
+            </t>
+
+            <t t-set="total_compras" t-value="0"/>
+            <t t-set="total_exentas" t-value="0"/>
+            <t t-set="afectas_base" t-value="0"/>
+            <t t-set="afectas_impto" t-value="0"/>
+            <t t-set="afectas_base_no" t-value="0"/>
+            <t t-set="afectas_impto_no" t-value="0"/>
+            <t t-set="impuesto_ret" t-value="0"/>
+            <t t-set="importacion" t-value="0"/>
+            <t t-set="alicuota_general" t-value="0"></t>
+            <t t-set="alicuota_general_mas" t-value="0"></t>
+            <t t-set="alicuota_reducida" t-value="0"></t>
+
+
+            <t t-call="libro_de_compras.external_layout_header_footer">
+                <br></br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="8">IDENTIFICACIÓN DE FACTURA</th>
+                            <th colspan="3"></th>
+                            <th colspan="2">COMPRAS AFECTAS (Debito Fiscal)</th>
+                        </tr>
+                        <tr>
+                            <th class="date_th">Fecha</th>
+                            <th>Número de factura</th>
+                            <th>Notas de débito</th>
+                            <th>Notas de crédito</th>
+                            <th>Reporte Z número</th>
+                            <th>Regístro número MH</th>
+                            <th>Nombre del comprador</th>
+                            <th>Estado</th>
+                            <th>R.Social Rif</th>
+                            <th>Total compras</th>
+                            <th>Compras excentas</th>
+                            <th>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th colspan="3">A contribuyentes</th>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Base</th>
+                                            <th>%</th>
+                                            <th>Impto.</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </th>
+
+                            <th>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th colspan="3">A no contribuyentes</th>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Base</th>
+                                            <th>%</th>
+                                            <th>Impto.</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </th>
+
+                            <th>Impuesto retenido</th>
+                            <th>Número de comprobante</th>
+                            <th>Documento afectado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="o" t-as="d">
+                            <t t-set="total_compras" t-value="total_compras+d['total_compras']"/>
+                            <t t-set="total_exentas" t-value="total_exentas+d['compras_exentas']"/>
+                            <t t-set="afectas_base" t-value="afectas_base+d['afectas_base']"/>
+                            <t t-set="afectas_impto" t-value="afectas_impto+d['afectas_impto']"/>
+                            <t t-set="afectas_base_no" t-value="afectas_base_no+d['afectas_base_no']"/>
+                            <t t-set="afectas_impto_no" t-value="afectas_impto_no+d['afectas_impto_no']"/>
+                            <t t-set="impuesto_ret" t-value="impuesto_ret+d['impuesto_ret']"/>
+
+                            <t t-if="d['importacion']=='si'">
+                                <t t-set="importacion" t-value="importacion+d['total_compras']"/>
+                            </t>
+
+                            <t t-if="d['afectas_porcent']=='16'">
+                                <t t-set="alicuota_general" t-value="alicuota_general+d['afectas_impto']"></t>
+                            </t>
+
+                            <t t-if="d['afectas_porcent_no']=='16'">
+                                <t t-set="alicuota_general" t-value="alicuota_general+d['afectas_impto_no']"></t>
+                            </t>
+
+                            <t t-if="d['afectas_porcent']=='24'">
+                                <t t-set="alicuota_general_mas" t-value="alicuota_general_mas+d['afectas_impto']"></t>
+                            </t>
+
+                            <t t-if="d['afectas_porcent_no']=='24'">
+                                <t t-set="alicuota_general_mas" t-value="alicuota_general_mas+d['afectas_impto_no']"></t>
+                            </t>
+
+                            <t t-if="d['afectas_porcent']=='8'">
+                                <t t-set="alicuota_reducida" t-value="alicuota_reducida+d['afectas_impto']"></t>
+                            </t>
+
+                            <t t-if="d['afectas_porcent_no']=='8'">
+                                <t t-set="alicuota_reducida" t-value="alicuota_reducida+d['afectas_impto_no']"></t>
+                            </t>
+
+                            <tr>
+                                <td t-esc="d['fecha']"></td>
+                                <td t-esc="d['numero_factura']"></td>
+                                <td t-esc="d['nota_debito']"></td>
+                                <td t-esc="d['nota_credito']"></td>
+                                <td t-esc="d['numero_z']"></td>
+                                <td t-esc="d['numero_mh']"></td>
+                                <td t-esc="d['nombre_comprador']"></td>
+                                <td t-esc="d['estado']"></td>
+                                <td t-esc="d['r_s_rif']"></td>
+                                <td t-esc="d['total_compras']"></td>
+                                <td t-esc="d['compras_exentas']"></td>
+                                <td>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td t-esc="d['afectas_base']"></td>
+                                                <td t-esc="d['afectas_porcent']"></td>
+                                                <td t-esc="d['afectas_impto']"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td t-esc="d['afectas_base_no']"></td>
+                                                <td t-esc="d['afectas_porcent_no']"></td>
+                                                <td t-esc="d['afectas_impto_no']"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td t-esc="d['impuesto_ret']"></td>
+                                <td t-esc="d['comprobante']"></td>
+                                <td t-esc="d['doc_afectado']"></td>
+                            </tr>
+                            <tr>
+                            </tr>
+                        </t>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="9" style="text-center">Totales afectos a tasa general: </td>
+                            <td t-esc="'%.2f'%total_compras"></td>
+                            <td t-esc="'%.2f'%total_exentas"></td>
+                            <td>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td t-esc="afectas_base"></td>
+                                            <td></td>
+                                            <td t-esc="afectas_impto"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td t-esc="afectas_base_no"></td>
+                                            <td></td>
+                                            <td t-esc="afectas_impto_no"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td t-esc="impuesto_ret"></td>
+                        </tr>
+                    </tfoot>
+                    <style>
+                        table{
+                            border-collapse:collapse;
+                        }
+                        table th, td{
+                            text-align:center;
+                            border:solid 1px;
+                        }
+
+                        table th{
+                            width:500px;
+                        }
+                        
+                        table table th, table table td{
+                            border:none;
+                            width:500px;
+                            text-align:center;
+                        }
+
+                        .date_th{
+                            min-width:100px;
+                        }
+
+                        table tbody, table tfoot{
+                            font-size:small;
+                        }
+
+                    </style>
+                </table>
+            <br></br>
+            <div style="border:solid 1px;">
+                <p>Total compras internas no gravadas: <span t-esc="'%.2f'%total_exentas"></span></p>
+                <p>Total compras de importación: <span t-esc="'%.2f'%importacion"></span></p>
+                <p>Total compras internas gravadas por alicuota general: <span t-esc="'%.2f'%alicuota_general"></span></p>
+                <p>Total compras internas gravadas por alicuota general mas adicional: <span t-esc="'%.2f'%alicuota_general_mas"></span></p>
+                <p>Total compras internas gravadas por alicuota reducida: <span t-esc="'%.2f'%alicuota_reducida"></span></p>
+            </div>
+            </t>
+
+        </t>
+    </template>
+</odoo>

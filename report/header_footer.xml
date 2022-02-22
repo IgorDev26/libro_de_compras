@@ -1,0 +1,29 @@
+<odoo>
+    <template id="external_layout_header_footer">
+        <div class="header">
+            <t t-set="company" t-value="user.company_id"/>
+            <div style="border:solid 1px black; border-bottom:none;">
+                <div class="row">
+                    <div class="col-6">
+                        <b>EMPRESA: </b><span t-esc="company.partner_id.name"></span>
+                    </div>
+                    <div class="col-6">
+                        <p style="text-align:right;">RIF: J-355008-8</p>
+                    </div>
+                </div>
+                <h3 style="text-align:center;">LIBRO DE COMPRAS</h3>
+                <p style="text-align:center; border-top:solid 1px black; border-bottom:solid 1px black;">
+                    COMPRAS CORRESPONDIENTES DEL <span t-esc="o[0]['fecha']"></span> AL <span t-esc="o[len(o)-1]['fecha']"></span>
+                </p>
+            </div>
+        </div>
+
+        <div class="article o_report_layout_standard">
+            <t t-raw="0"/>
+        </div>
+
+        <div class="footer">
+            <hr></hr>
+        </div>
+    </template>
+</odoo>
