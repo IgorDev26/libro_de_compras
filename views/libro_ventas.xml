@@ -1,0 +1,76 @@
+<odoo>
+    <record id="view_tree_libro_ventas" model="ir.ui.view">
+        <field name="name">view.tree.libro.ventas</field>
+        <field name="model">libro.ventas</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="fecha"/>
+                <field name="numero_factura"/>
+                <field name="numero_z"/>
+                <field name="numero_mh"/>
+                <field name="nombre_vendedor"/>
+                <field name="r_s_rif"/>
+                <field name="estado"/>
+                <field name="importacion"/>
+                <field name="ventas_exentas"/>
+                <field name="afectas_base"/>
+                <field name="afectas_porcent"/>
+                <field name="afectas_impto"/>
+                <field name="afectas_base_no"/>
+                <field name="afectas_porcent_no"/>
+                <field name="afectas_impto_no"/>
+                <field name="impuesto_ret"/>
+                <field name="comprobante"/>
+                <field name="doc_afectado"/>
+                <field name="nota_credito"/>
+                <field name="nota_debito"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_form_libro_ventas" model="ir.ui.view">
+        <field name="name">view.form.libro.ventas</field>
+        <field name="model">libro.ventas</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="fecha"/>
+                        <field name="numero_factura"/>
+                        <field name="numero_z"/>
+                        <field name="numero_mh"/>
+                        <field name="nombre_vendedor"/>
+                        <field name="r_s_rif"/>
+                        <field name="estado"/>
+                        <field name="importacion"/>
+                        <field name="ventas_exentas"/>
+                        <field name="impuesto_ret"/>
+                        <field name="comprobante"/>
+                        <field name="doc_afectado"/>
+                        <field name="nota_credito"/>
+                        <field name="nota_debito"/>
+                    </group>
+                    <group>
+                        <h5>Ventas afectas</h5><br></br>
+                        <p>De contribuyentes</p>
+                        <field name="afectas_base"/>
+                        <field name="afectas_porcent"/>
+                        <field name="afectas_impto"/>
+                        <p>De no contribuyentes</p>
+                        <field name="afectas_base_no"/>
+                        <field name="afectas_porcent_no"/>
+                        <field name="afectas_impto_no"/>
+                        <br></br>
+                        <field name="total_ventas"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="libro_ventas_action" model="ir.actions.act_window">
+        <field name="name">Regístro de libro de ventas</field>
+        <field name="res_model">libro.ventas</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

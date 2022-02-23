@@ -14,6 +14,20 @@
     />
 
     <menuitem
+        name="Registro de ventas"
+        id="menu_registro_de_ventas"
+        action="libro_de_compras.libro_ventas_action"
+        parent="account.account_reports_management_menu"
+    />
+
+    <menuitem
+        name="Libro de ventas"
+        id="menu_libro_de_ventas"
+        action="libro_de_compras.action_resumen_ventas"
+        parent="account.account_reports_management_menu"
+    />
+
+    <menuitem
         name="Resumen"
         id="resumen_libro_de_compras"
         action="libro_de_compras.action_resumen"

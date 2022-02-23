@@ -13,7 +13,7 @@
                 </div>
                 <h3 style="text-align:center;">LIBRO DE VENTAS</h3>
                 <p style="text-align:center; border-top:solid 1px black; border-bottom:solid 1px black;">
-                    VENTAS CORRESPONDIENTES DEL <span t-esc="o['f_inicio']"></span> AL <span t-esc="o['f_fin']"></span>
+                    COMPRAS CORRESPONDIENTES DEL <span t-esc="o[0]['fecha']"></span> AL <span t-esc="o[len(o)-1]['fecha']"></span>
                 </p>
             </div>
         </div>
