@@ -238,11 +238,11 @@
                 </table>
             <br></br>
             <div style="border:solid 1px;">
-                <p>Total compras internas no gravadas: <span t-esc="'%.2f'%total_exentas"></span></p>
-                <p>Total compras de importación: <span t-esc="'%.2f'%importacion"></span></p>
-                <p>Total compras internas gravadas por alicuota general: <span t-esc="'%.2f'%alicuota_general"></span></p>
-                <p>Total compras internas gravadas por alicuota general mas adicional: <span t-esc="'%.2f'%alicuota_general_mas"></span></p>
-                <p>Total compras internas gravadas por alicuota reducida: <span t-esc="'%.2f'%alicuota_reducida"></span></p>
+                <p>Total ventas internas no gravadas: <span t-esc="'%.2f'%total_exentas"></span></p>
+                <p>Total ventas de importación: <span t-esc="'%.2f'%importacion"></span></p>
+                <p>Total ventas internas gravadas por alicuota general: <span t-esc="'%.2f'%alicuota_general"></span></p>
+                <p>Total ventas internas gravadas por alicuota general mas adicional: <span t-esc="'%.2f'%alicuota_general_mas"></span></p>
+                <p>Total ventas internas gravadas por alicuota reducida: <span t-esc="'%.2f'%alicuota_reducida"></span></p>
             </div>
             </t>
 
